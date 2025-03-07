@@ -4,6 +4,11 @@ dotenv.config();
 import Product from '../models/product.model.js';
 import Customer from '../models/customer.model.js';
 
+const razorpayInstance = new Razorpay({
+    key_id: process.env.RAZORPAY_ID_KEY,
+    key_secret: process.env.RAZORPAY_SECRET_KEY
+});
+
 export const registerCustomer = async (req, res) => {
     try {
         const { name, mobile , email, password ,address } = req.body;
@@ -94,8 +99,6 @@ export const getAllProducts = async (req, res) => {
     }
 }
 
-dotenv.config();
-
 export const addToCart = async (req, res) => {
     try {
         const token = req.headers.authorization?.split(" ")[1];
@@ -145,6 +148,38 @@ export const addToCart = async (req, res) => {
         res.status(500).json({ success: false, message: "Server error" });
     }
 };
+
+export const createOrder = async (req, res) => {
+    try {
+        const amount = req.body.amount * 100; // Convert INR to paise
+        const options = {
+            amount: amount,
+            currency: 'INR',
+            receipt: `order_${Date.now()}`
+        };
+
+        razorpayInstance.orders.create(options, (err, order) => {
+            if (!err) {
+                res.status(200).json({
+                    success: true,
+                    order_id: order.id,
+                    amount: amount,
+                    key_id: RAZORPAY_ID_KEY,
+                    name: req.body.name,
+                    description: req.body.description,
+                    email: req.body.email,
+                    contact: req.body.contact
+                });
+            } else {
+                res.status(400).json({ success: false, msg: 'Error creating order' });
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, msg: 'Server Error' });
+    }
+};
+
 
 
 const generateToken = (id) => {
