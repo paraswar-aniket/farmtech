@@ -1,5 +1,5 @@
 import express from 'express';
-import { createProduct, getFarmerProducts, registerFarmer } from '../controllers/farmer.controller.js';
+import { createProduct, deleteProduct, getFarmerProducts, registerFarmer } from '../controllers/farmer.controller.js';
 import { farmerLogin } from '../controllers/farmer.controller.js';
 import multer from "multer";
 import upload from '../middlewares/uploadMiddleware.js';
@@ -13,6 +13,8 @@ router.post('/signin', farmerLogin);
 router.post('/addproduct' , upload.single("image"), createProduct );
 
 router.get('/getproducts', getFarmerProducts);
+
+router.delete('/deleteproduct/:productId',deleteProduct);
 
 
 export default router;

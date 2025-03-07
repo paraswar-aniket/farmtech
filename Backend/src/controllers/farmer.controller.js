@@ -172,7 +172,45 @@ export const farmerLogin = async (req, res) => {
     }
 };
 
-
+export const deleteProduct = async (req, res) => {
+    try {
+      const token = req.headers.authorization?.split(" ")[1];
+  
+      if (!token) {
+        return res.status(401).json({ message: "Unauthorized: No token provided" });
+      }
+  
+      let decoded;
+      try {
+        decoded = jwt.verify(token, process.env.JWT_SECRET);
+      } catch (err) {
+        return res.status(401).json({ message: "Unauthorized: Invalid token" });
+      }
+  
+      const farmerId = decoded.id;
+  
+      const { productId } = req.params;
+  
+      const product = await Product.findById(productId);
+  
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+  
+      if (product.farmer.toString() !== farmerId) {
+        return res.status(403).json({ message: "Unauthorized: Cannot delete this product" });
+      }
+  
+      await product.deleteOne();
+  
+      res.status(200).json({ message: "Product deleted successfully" , success:true
+      });
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      res.status(500).json({ message: "Server error", error });
+    }
+};
+  
 
 
 const generateToken = (id) => {
