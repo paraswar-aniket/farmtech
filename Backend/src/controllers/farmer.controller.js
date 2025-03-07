@@ -46,3 +46,36 @@ export const registerFarmer = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
+
+export const farmerLogin = async (req, res) => {
+    const { mobile, password } = req.body;
+  
+    try {
+      const farmer = await Farmer.findOne({ mobile });
+  
+      if (!farmer) {
+        return res.status(400).json({ message: "Farmer not found!" });
+      }
+  
+      const isMatch = await farmer.matchPassword(password);
+  
+      if (!isMatch) {
+        return res.status(400).json({ message: "Invalid credentials!" });
+      }
+  
+      res.json({
+        _id: farmer._id,
+        name: farmer.name,
+        mobile: farmer.mobile,
+        email: farmer.email,
+        token: generateToken(farmer._id),
+      });
+  
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error });
+    }
+};
+
+const generateToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
+};
