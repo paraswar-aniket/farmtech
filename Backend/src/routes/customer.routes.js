@@ -10,7 +10,7 @@ router.post('/signin', customerLogin);
 
 router.get('/products', getAllProducts);
 
-router.get('/addtocart', addToCart);
+router.post('/addtocart', addToCart);
 
 router.post('/createorder',createOrder);
 
