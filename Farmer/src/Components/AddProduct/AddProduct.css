@@ -1,0 +1,117 @@
+/* Main form container */
+.addproduct {
+  box-sizing: border-box;
+  width: 90%;
+  max-width: 800px;
+  padding: 30px;
+  margin: 20px auto;
+  border-radius: 12px;
+  background: linear-gradient(to bottom right, #e3f2fd, #bbdefb);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid #90caf9;
+  align-items: center;
+  justify-content: center;
+  margin-left: 200px;
+  
+}
+
+/* Two-column layout */
+.addproduct-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Form fields with icons */
+.addproduct-itemfield {
+  flex: 1 1 48%;
+  position: relative;
+}
+.addproduct-itemfield-file{
+  margin: 10px;
+  flex: 1 1 48%;
+  position: relative;
+  justify-self: center;
+}
+
+/* Label styling */
+.addproduct-itemfield p {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #222;
+}
+
+/* Input, Select, and Textarea styling */
+.addproduct-itemfield input,
+.addproduct-itemfield select,
+.addproduct-itemfield textarea {
+  width: 100%;
+  height: 50px;
+  padding: 12px 40px;
+  border-radius: 10px;
+  border: 1px solid #64b5f6;
+  outline: none;
+  color: #333;
+  font-size: 15px;
+  background-color: #ffffff;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Focus Effect */
+.addproduct-itemfield input:focus,
+.addproduct-itemfield select:focus,
+.addproduct-itemfield textarea:focus {
+  border-color: #1e88e5;
+  box-shadow: 0 0 6px rgba(30, 136, 229, 0.4);
+}
+
+/* Icon positioning */
+.addproduct-itemfield .icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #42a5f5;
+}
+
+/* Adjust input padding for icons */
+.addproduct-itemfield input,
+.addproduct-itemfield select {
+  padding-left: 45px;
+}
+
+/* Submit button */
+.addproduct-btn {
+  width: 100%;
+  max-width: 300px;
+  height: 55px;
+  border-radius: 10px;
+  background: linear-gradient(to right, #42a5f5, #1e88e5);
+  cursor: pointer;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  transition: background 0.3s, box-shadow 0.3s;
+  display: block;
+  margin: 20px auto;
+}
+
+.addproduct-btn:hover {
+  background: linear-gradient(to right, #1e88e5, #1565c0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .addproduct-form {
+      flex-direction: column;
+  }
+
+  .addproduct-itemfield {
+      flex: 1 1 100%;
+  }
+}

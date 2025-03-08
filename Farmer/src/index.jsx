@@ -3,15 +3,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App';
-import {LoginSignup} from './Pages/LoginSignup/LoginSignup';
+import LoginSignup from './Pages/LoginSignup/LoginSignup';
 import HomePage from './Pages/Homepage/HomePage';
-import {Admin} from './Pages/Admin/Admin';
-import UserContext from './context/UserContext';
+import Admin from './Pages/Admin/Admin';
 // Import other pages as needed
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <UserContext>
   <BrowserRouter>
     <Routes>
       {/* This route renders your App which conditionally renders Admin or HomePage */}
@@ -24,5 +22,4 @@ root.render(
       {/* Add more routes as needed */}
     </Routes>
   </BrowserRouter>
-  </UserContext>
 );

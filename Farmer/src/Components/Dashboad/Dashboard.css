@@ -1,0 +1,77 @@
+.dashboard {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Summary Cards */
+  .summary-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .card {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .card h3 {
+    margin: 10px 0;
+    color: #333;
+  }
+  
+  .card p {
+    font-size: 22px;
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  /* Icons */
+  .icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+  
+  .red {
+    color: #e74c3c;
+  }
+  
+  .blue {
+    color: #3498db;
+  }
+  
+  .green {
+    color: #2ecc71;
+  }
+  
+  /* Charts */
+  .chart-container {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .chart-container h3 {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 18px;
+  }
+  

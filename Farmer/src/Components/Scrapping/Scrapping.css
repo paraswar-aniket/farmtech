@@ -1,0 +1,109 @@
+/* 🌟 Container Styling */
+.scraping-container {
+    margin: 20px auto;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    height: 600px; /* Increased container height */
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Prevents unnecessary overflow */
+}
+
+/* 📌 Heading */
+h2 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* 🎨 Table Wrapper with Hidden Scrollbars */
+.table-container {
+    width: 100%;
+    max-height: 550px; /* Adjusted height */
+    overflow-y: auto; /* Enables vertical scrolling */
+    overflow-x: auto; /* Enables horizontal scrolling */
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    
+    /* 🚀 Hide Scrollbars */
+    scrollbar-width: none; /* Firefox */
+}
+
+/* Hide Scrollbars for Chrome, Safari, and Edge */
+.table-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* 🌟 Styled Table */
+.price-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Ensures equal column width */
+}
+
+/* 🎨 Table Header */
+.price-table thead {
+    background: #007bff;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* Header Cells */
+.price-table th {
+    padding: 14px;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+}
+
+/* 📊 Table Rows */
+.price-table tr {
+    transition: all 0.2s ease-in-out;
+}
+
+.price-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    text-align: left;
+    word-wrap: break-word; /* Prevents text overflow */
+}
+
+/* 🟢 Alternate Row Color */
+.price-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* ✨ Hover Effect */
+.price-table tr:hover {
+    background: rgba(0, 123, 255, 0.1);
+    transform: scale(1.01);
+}
+
+/* 📱 Responsive Table */
+@media (max-width: 768px) {
+    .scraping-container {
+        padding: 10px;
+        height: 650px; /* Increased height for mobile */
+    }
+
+    .table-container {
+        max-height: 600px; /* Adjust scrolling for smaller screens */
+    }
+
+    .price-table th, .price-table td {
+        padding: 10px;
+        font-size: 12px;
+    }
+}
