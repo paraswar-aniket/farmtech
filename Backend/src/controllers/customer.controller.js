@@ -290,6 +290,49 @@ export const getProductById = async (req, res) => {
     }
 };
 
+export const getCartProducts = async (req, res) => {
+    try {
+        // Extract token from Authorization header
+        const token = req.headers.authorization?.split(" ")[1];
+
+        if (!token) {
+            return res.status(401).json({ success: false, message: "Unauthorized: No token provided" });
+        }
+
+        let decoded;
+        try {
+            decoded = jwt.verify(token, process.env.JWT_SECRET);
+        } catch (err) {
+            return res.status(401).json({ success: false, message: "Unauthorized: Invalid token" });
+        }
+
+        // Extract customer ID from the decoded token
+        const customerId = decoded.id;
+
+        // Find customer
+        const customer = await Customer.findById(customerId).populate({
+            path: "cart",
+            select: "_id name price category stock description",
+        });
+
+        if (!customer) {
+            return res.status(404).json({ success: false, message: "Customer not found" });
+        }
+
+        // Retrieve cart products
+        const cartProducts = customer.cart;
+
+        res.status(200).json({
+            success: true,
+            message: "Cart products retrieved successfully",
+            cartProducts,
+        });
+
+    } catch (error) {
+        console.error("Error fetching cart products:", error);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+};
 
 
 
