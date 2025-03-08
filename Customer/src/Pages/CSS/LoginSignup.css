@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+.loginSignup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f9ffd9, #e0f7da);
+  font-family: 'Poppins', sans-serif;
+}
+
+.loginSignup-container {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+}
+
+.loginSignup h1 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  color: #333;
+}
+
+.loginSignup-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+}
+
+.input-icon {
+  color: #888;
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
+.input-group input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 1rem;
+  background: transparent;
+}
+
+.submit-button {
+  background: linear-gradient(to right, #42a5f5, #1e88e5);
+  color: white;
+  border: none;
+  padding: 0.9rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-button:hover {
+  background: linear-gradient(to right, #1e88e5, #1565c0);
+  transform: translateY(-2px);
+}
+
+.loginSignup-login span {
+  color: #42a5f5;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .loginSignup-container {
+    padding: 1.8rem;
+  }
+}

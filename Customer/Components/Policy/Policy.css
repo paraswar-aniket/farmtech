@@ -1,0 +1,73 @@
+/* Policy Section */
+.policy-section {
+    padding: 3rem 1.5rem;
+    background-color: #f0fdf4; /* Light green */
+  }
+  
+  .policy-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  /* Heading */
+  .policy-heading {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2.5rem;
+    color: #065f46;
+  }
+  
+  /* Policy Cards */
+  .policy-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .policy-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .policy-card {
+    background-color: #f3fae7;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .policy-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .policy-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  .policy-icon-size {
+    width: 3rem;
+    height: 3rem;
+    color: #059669;
+  }
+  
+  .policy-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  
+  /* Tractor Image */
+  .policy-image-container {
+    margin-top: 3rem;
+  }
+  
+  .policy-image {
+    width: 100%;
+    height: 16rem;
+    object-fit: cover;
+    border-radius: 12px;
+  }

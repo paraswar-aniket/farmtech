@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Shop } from './Pages/Shop';
+import { ShopCategory } from './Pages/ShopCategory';
+import { Product } from './Pages/Product';
+import { LoginSignup } from './Pages/LoginSignup';
+import Cart from './Pages/Cart';
+import fruits_banner from '../Components/Assets/banner_fruits.jpg'; // Add your fruit banner image path
+import vegetables_banner from '../Components/Assets/banner_vegetables.jpg'; // Add your vegetable banner image path
+import grains_banner from '../Components/Assets/banner_grains.jpg'; // Add your grain banner image path
+import { Navbar } from '../Components/Navbar/Navbar';
+import { Footer } from '../Components/Footer/Footer';
+import { Transaction } from '../Components/Transaction/Transaction';
+import { Policy } from "../Components/Policy/Policy";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <BrowserRouter>
+        <Navbar/>
+        <Routes>
+          <Route path="/" element={<Shop />} />
+          <Route path="/fruits" element={<ShopCategory banner={fruits_banner} category="fruits" />} />
+          <Route path="/vegetables" element={<ShopCategory banner={vegetables_banner} category="vegetables" />} />
+          <Route path="/grains" element={<ShopCategory banner={grains_banner} category="grains" />} />
+          
+          <Route path="/product/:id" element={<Product />} />
+          <Route path="/transactions" element={<Transaction />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<LoginSignup />} />
+        </Routes> 
+        <Policy/>
+        <Footer/>
+      </BrowserRouter>
+    </div>
+  );
 }
 
-export default App
+export default App;
