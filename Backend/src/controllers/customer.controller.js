@@ -42,8 +42,6 @@ export const getOrdersForCustomer = async (req, res) => {
                     _id: order._id,
                     farmer: farmer ? { id: farmer._id, name: farmer.name, email: farmer.email } : null,
                     products: products.map(product => ({ id: product._id, name: product.name })),
-                    price: order.price,
-                    quantity: order.quantity,
                     totalBill: order.totalBill,
                     createdAt: order.createdAt,
                     updatedAt: order.updatedAt,
@@ -92,13 +90,13 @@ export const createOrder = async (req, res) => {
 
 export const addOrder = async (req, res) => {
     try {
-        const { from, to, product, price, quantity, totalBill, paymentId } = req.body;
+        const { from, to, product, totalBill, paymentId } = req.body;
 
-        if (!from || !to || !product || !price || !quantity || !totalBill || !paymentId) {
+        if (!from || !to || !product || !totalBill || !paymentId) {
             return res.status(400).json({ success: false, message: "All fields are required, including paymentId" });
         }
 
-        const newOrder = new Order({ from, to, product, price, quantity, totalBill, paymentId });
+        const newOrder = new Order({ from, to, product, totalBill, paymentId });
         await newOrder.save();
 
         res.status(201).json({ success: true, message: "Order placed successfully", order: newOrder });
@@ -312,7 +310,7 @@ export const getCartProducts = async (req, res) => {
         // Find customer
         const customer = await Customer.findById(customerId).populate({
             path: "cart",
-            select: "_id name price category stock description image",
+            select: "_id name price category stock description image farmer",
         });
 
         if (!customer) {

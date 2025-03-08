@@ -41,8 +41,6 @@ export const getOrdersForFarmer = async (req, res) => {
                     _id: order._id,
                     customer: customer ? { name: customer.name} : null,
                     products: products.map(product => ({ name: product.name , image:product.image})),
-                    price: order.price,
-                    quantity: order.quantity,
                     totalBill: order.totalBill,
                     createdAt: order.createdAt,
                     updatedAt: order.updatedAt,
