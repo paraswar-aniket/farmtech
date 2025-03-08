@@ -1,10 +1,61 @@
 import Farmer from '../models/farmer.model.js';
 import Product from '../models/product.model.js';
 import cloudinary from '../config/cloudinary.js';
+import Customer from '../models/customer.model.js';
+import Order from '../models/order.model.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
+
+export const getOrdersForFarmer = async (req, res) => {
+    try {
+        const token = req.headers.authorization?.split(" ")[1];
+
+        if (!token) {
+            return res.status(401).json({ message: "Unauthorized: No token provided" });
+        }
+
+        let decoded;
+        try {
+            decoded = jwt.verify(token, process.env.JWT_SECRET);
+        } catch (err) {
+            return res.status(401).json({ message: "Unauthorized: Invalid token" });
+        }
+
+        const farmerId = decoded.id; 
+        
+        const orders = await Order.find({ from: farmerId }).select("-__v"); // Remove __v
+
+        // Process orders manually
+        
+       
+        
+
+        const processedOrders = await Promise.all(
+            orders.map(async (order) => {
+                const customer = await Customer.findById(order.to).select("_id name email");
+                const products = await Product.find({ _id: { $in: order.product } }).select("_id name");
+
+                return {
+                    _id: order._id,
+                    customer: customer ? { name: customer.name} : null,
+                    products: products.map(product => ({ name: product.name , image:product.image})),
+                    price: order.price,
+                    quantity: order.quantity,
+                    totalBill: order.totalBill,
+                    createdAt: order.createdAt,
+                    updatedAt: order.updatedAt,
+                };
+            })
+        );
+
+        return res.status(200).json({ success: true, orders: processedOrders });
+    } catch (error) {
+        console.error("Error fetching farmer's orders:", error);
+        return res.status(500).json({ success: false, message: "Error fetching orders" });
+    }
+};
 
 export const createProduct = async (req, res) => {
     try {
@@ -52,7 +103,7 @@ export const createProduct = async (req, res) => {
             quantity,
             price,
             description,
-            image: cloudinaryResponse.secure_url, // Fix: Corrected image URL
+            image: cloudinaryResponse.secure_url, 
             farmer: farmerId,
         });
 

@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import Product from '../models/product.model.js';
 import Customer from '../models/customer.model.js';
+import Order from '../models/order.model.js';
 import bodyParser from 'body-parser';
 import Razorpay from 'razorpay';
 
@@ -42,6 +43,27 @@ export const createOrder = async (req, res) => {
         res.status(500).json({ success: false, msg: 'Server Error' });
     }
 };
+
+export const addOrder = async (req, res) => {
+    try {
+        const { from, to, product, price, quantity, totalBill, paymentId } = req.body;
+
+        if (!from || !to || !product || !price || !quantity || !totalBill || !paymentId) {
+            return res.status(400).json({ success: false, message: "All fields are required, including paymentId" });
+        }
+
+        const newOrder = new Order({ from, to, product, price, quantity, totalBill, paymentId });
+        await newOrder.save();
+
+        res.status(201).json({ success: true, message: "Order placed successfully", order: newOrder });
+
+    } catch (error) {
+        console.error("Error creating order:", error);
+        res.status(500).json({ success: false, message: "Error placing order" });
+    }
+};
+
+
 
 export const registerCustomer = async (req, res) => {
     try {
