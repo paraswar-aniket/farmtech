@@ -38,17 +38,17 @@ const Dashboard = () => {
         <div className="card">
           <FaShoppingCart className="icon red" />
           <h3>Total Orders</h3>
-          <p>359</p>
+          <p>35</p>
         </div>
         <div className="card">
           <FaTruck className="icon blue" />
           <h3>Total Delivered</h3>
-          <p>335</p>
+          <p>33</p>
         </div>
         <div className="card">
           <FaChartLine className="icon green" />
           <h3>Total Sales</h3>
-          <p>₹ 11.8 Cr</p>
+          <p>₹ 2270</p>
         </div>
       </div>
 
