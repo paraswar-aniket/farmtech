@@ -312,7 +312,7 @@ export const getCartProducts = async (req, res) => {
         // Find customer
         const customer = await Customer.findById(customerId).populate({
             path: "cart",
-            select: "_id name price category stock description",
+            select: "_id name price category stock description image",
         });
 
         if (!customer) {
