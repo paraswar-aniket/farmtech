@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import Product from '../models/product.model.js';
 import Customer from '../models/customer.model.js';
+import Farmer from '../models/farmer.model.js';
 import Order from '../models/order.model.js';
 import bodyParser from 'body-parser';
 import Razorpay from 'razorpay';
@@ -12,6 +13,51 @@ const razorpayInstance = new Razorpay({
     key_id: process.env.RAZORPAY_ID_KEY,
     key_secret: process.env.RAZORPAY_SECRET_KEY
 });
+
+
+export const getOrdersForCustomer = async (req, res) => {
+    try {
+        const token = req.headers.authorization?.split(" ")[1];
+        if (!token) {
+            return res.status(401).json({ message: "Unauthorized: No token provided" });
+        }
+
+        let decoded;
+        try {
+            decoded = jwt.verify(token, process.env.JWT_SECRET);
+        } catch (err) {
+            return res.status(401).json({ message: "Unauthorized: Invalid token" });
+        }
+
+        const customerId = decoded.id; 
+
+        const orders = await Order.find({ to: customerId }).select("-__v");
+
+        const processedOrders = await Promise.all(
+            orders.map(async (order) => {
+                const farmer = await Farmer.findById(order.from).select("_id name email");
+                const products = await Product.find({ _id: { $in: order.product } }).select("_id name");
+
+                return {
+                    _id: order._id,
+                    farmer: farmer ? { id: farmer._id, name: farmer.name, email: farmer.email } : null,
+                    products: products.map(product => ({ id: product._id, name: product.name })),
+                    price: order.price,
+                    quantity: order.quantity,
+                    totalBill: order.totalBill,
+                    createdAt: order.createdAt,
+                    updatedAt: order.updatedAt,
+                };
+            })
+        );
+
+        return res.status(200).json({ success: true, orders: processedOrders });
+    } catch (error) {
+        console.error("Error fetching customer's orders:", error);
+        return res.status(500).json({ success: false, message: "Error fetching orders" });
+    }
+};
+
 
 export const createOrder = async (req, res) => {
     try {
@@ -62,8 +108,6 @@ export const addOrder = async (req, res) => {
         res.status(500).json({ success: false, message: "Error placing order" });
     }
 };
-
-
 
 export const registerCustomer = async (req, res) => {
     try {

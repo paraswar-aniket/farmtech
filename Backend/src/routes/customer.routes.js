@@ -1,5 +1,5 @@
 import express from 'express';
-import { addOrder, addToCart, createOrder, customerLogin, getAllProducts, registerCustomer } from '../controllers/customer.controller.js';
+import { addOrder, addToCart, createOrder, customerLogin, getAllProducts, getOrdersForCustomer, registerCustomer } from '../controllers/customer.controller.js';
 
 
 const router = express.Router();
@@ -15,6 +15,8 @@ router.get('/addtocart', addToCart);
 router.post('/createorder',createOrder);
 
 router.post('/addorder',addOrder);
+
+router.get('/getmyorder',getOrdersForCustomer);
 
 
 export default router;
