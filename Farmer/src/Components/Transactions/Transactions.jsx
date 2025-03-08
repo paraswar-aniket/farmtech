@@ -6,7 +6,7 @@ export const Transactions = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Dummy orders fallback
+  // Dummy orders fallback (Matching API structure)
   const dummyOrders = [
     {
       _id: 'DUMMY001',
@@ -14,8 +14,6 @@ export const Transactions = () => {
       totalBill: 500,
       customer: { name: 'John Doe' },
       products: [{ name: 'Wheat' }],
-      quantity: 10,
-      price: 200,
     },
     {
       _id: 'DUMMY002',
@@ -23,8 +21,6 @@ export const Transactions = () => {
       totalBill: 800,
       customer: { name: 'Alice Smith' },
       products: [{ name: 'Rice' }],
-      quantity: 15,
-      price: 300,
     },
     {
       _id: 'DUMMY003',
@@ -32,19 +28,16 @@ export const Transactions = () => {
       totalBill: 1200,
       customer: { name: 'Bob Johnson' },
       products: [{ name: 'Corn' }],
-      quantity: 20,
-      price: 400,
     },
   ];
 
   const fetchOrders = async () => {
     try {
+      const token = localStorage.getItem('x-access-token');
       const response = await fetch('https://farmtech-kxq6.onrender.com/api/farmers/getOrders', {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-          // Pass token as a Bearer token if that's what your API expects
-          'x-access-token': localStorage.getItem('x-access-token'),
+          'Authorization': `Bearer ${token}`,
         },
       });
 
@@ -60,8 +53,7 @@ export const Transactions = () => {
       }
     } catch (err) {
       console.error('Error fetching orders:', err);
-      setError('Failed to fetch orders. Showing dummy data.');
-      setOrders(dummyOrders);
+      setOrders(dummyOrders); // Use dummy data on failure
     } finally {
       setLoading(false);
     }
@@ -91,21 +83,17 @@ export const Transactions = () => {
                 </div>
                 <div className="transaction-body">
                   <p>
-                    <strong>Buyer:</strong> {order.customer.name}
+                    <strong>Buyer:</strong> {order.customer?.name || 'Unknown'}
                   </p>
                   <p>
-                    <strong>Product(s):</strong> {productNames}
+                    <strong>Product(s):</strong> {productNames || 'N/A'}
                   </p>
                   <p>
-                    <strong>Quantity:</strong> {order.quantity}
-                  </p>
-                  <p>
-                    <strong>Price:</strong> ₹ {order.price}
+                    <strong>Total Bill:</strong> ₹ {order.totalBill}
                   </p>
                 </div>
                 <div className="transaction-footer">
                   <span className="transaction-status">✔ Accepted</span>
-                  <span className="total-bill">Total: ₹ {order.totalBill}</span>
                 </div>
               </div>
             );
